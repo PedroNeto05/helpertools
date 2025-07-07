@@ -1,0 +1,53 @@
+# Node.js
+node_modules/
+dist/
+build/
+.yarn/
+.pnpm-debug.log
+npm-debug.log
+yarn-error.log
+
+# Tauri (Rust)
+**/target/
+**/.cargo/
+**/Cargo.lock
+**/gen/schemas
+
+# Rust general
+**/target/
+**/*.rs.bk
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.env
+.env
+.venv/
+venv/
+ENV/
+*.egg-info/
+pip-log.txt
+
+# VSCode
+.vscode/
+
+# JetBrains (IntelliJ, PyCharm, etc)
+.idea/
+
+# MacOS
+.DS_Store
+
+# Logs
+*.log
+
+# Optional OS/Editor/Tooling
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
