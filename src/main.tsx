@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
+import './globals.css';
 
 // Import the generated route tree
 // NOTE: './routeTree.gen' is an auto-generated file by the TanStack Router plugin.
