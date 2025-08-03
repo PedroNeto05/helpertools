@@ -45,7 +45,7 @@ export function InputUrl() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex items-center space-x-8"
+            className="flex items-center space-x-4"
           >
             <FormField
               control={form.control}
