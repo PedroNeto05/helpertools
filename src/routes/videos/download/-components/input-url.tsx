@@ -11,7 +11,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Download, Youtube } from 'lucide-react';
+import { Search, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input';
 import { z } from 'zod';
@@ -64,7 +64,7 @@ export function InputUrl() {
               )}
             />
             <Button type="submit">
-              <Download />
+              <Search />
               <p>Buscar</p>
             </Button>
           </form>
