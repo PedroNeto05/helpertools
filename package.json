@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@eslint/css": "^0.9.0",
-    "@eslint/json": "^0.12.0",
+    "@eslint/json": "^0.13.1",
     "@eslint/markdown": "^6.6.0",
     "@tanstack/router-cli": "^1.130.15",
     "@tanstack/router-plugin": "^1.130.15",
