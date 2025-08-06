@@ -28,18 +28,19 @@ import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 
+const formSchema = z.object({
+  quality: z.string(),
+  fps: z.string(),
+  audioQuality: z.string(),
+  bitrate: z.string(),
+  format: z.string(),
+  audioFormat: z.string(),
+  audioOnly: z.boolean(),
+  subtitles: z.boolean(),
+  subtitlesLanguage: z.string(),
+});
+
 export function VideoDownloadSettings() {
-  const formSchema = z.object({
-    quality: z.string(),
-    fps: z.string(),
-    audioQuality: z.string(),
-    bitrate: z.string(),
-    format: z.string(),
-    audioFormat: z.string(),
-    audioOnly: z.boolean(),
-    subtitles: z.boolean(),
-    subtitlesLanguage: z.string(),
-  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -247,7 +248,7 @@ export function VideoDownloadSettings() {
                   render={({ field }) => (
                     <FormItem className="flex items-center justify-between">
                       <div>
-                        <FormLabel>
+                        <FormLabel className="flex items-center gap-2">
                           <Music className="size-4" />
                           Apenas Áudio
                         </FormLabel>
@@ -271,7 +272,7 @@ export function VideoDownloadSettings() {
                   render={({ field }) => (
                     <FormItem className="flex items-center justify-between">
                       <div>
-                        <FormLabel>
+                        <FormLabel className="flex items-center gap-2">
                           <BookOpenText className="size-4" />
                           Legendas
                         </FormLabel>
