@@ -46,9 +46,9 @@ function TabsTrigger({
       data-slot="tabs-trigger"
       onMouseDown={(e) => {
         if (preventSelect) {
-          e.preventDefault(); // Impede a troca de aba
+          e.preventDefault();
         }
-        props.onMouseDown?.(e); // Garante que o onMouseDown externo ainda funcione
+        props.onMouseDown?.(e);
       }}
       aria-disabled={preventSelect}
       className={cn(
