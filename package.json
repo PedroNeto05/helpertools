@@ -12,7 +12,11 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
     "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.5",
+    "@radix-ui/react-tabs": "^1.1.12",
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-router": "^1.130.12",
     "@tanstack/react-router-devtools": "^1.130.13",
@@ -30,7 +34,7 @@
   },
   "devDependencies": {
     "@eslint/css": "^0.9.0",
-    "@eslint/json": "^0.12.0",
+    "@eslint/json": "^0.13.1",
     "@eslint/markdown": "^6.6.0",
     "@tanstack/router-cli": "^1.130.15",
     "@tanstack/router-plugin": "^1.130.15",

@@ -11,7 +11,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Download, Youtube } from 'lucide-react';
+import { Search, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input';
 import { z } from 'zod';
@@ -45,7 +45,7 @@ export function InputUrl() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex items-center space-x-8"
+            className="flex items-center space-x-4"
           >
             <FormField
               control={form.control}
@@ -64,7 +64,7 @@ export function InputUrl() {
               )}
             />
             <Button type="submit">
-              <Download />
+              <Search />
               <p>Buscar</p>
             </Button>
           </form>
