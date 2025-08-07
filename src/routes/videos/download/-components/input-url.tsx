@@ -11,7 +11,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Search, Youtube } from 'lucide-react';
+import { Search, Link } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input';
 import { z } from 'zod';
@@ -37,7 +37,7 @@ export function InputUrl() {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
-          <Youtube />
+          <Link />
           <p>URL do Vídeo</p>
         </CardTitle>
       </CardHeader>
