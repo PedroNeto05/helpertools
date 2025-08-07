@@ -79,15 +79,15 @@ export function VideoDownloadSettings() {
                   className="flex items-center gap-2"
                 >
                   <Video className="size-4" />
-                  Vídeo
+                  <p>Vídeo</p>
                 </TabsTrigger>
                 <TabsTrigger value="audio" className="flex items-center gap-2">
                   <Music className="size-4" />
-                  Áudio
+                  <p>Áudio</p>
                 </TabsTrigger>
                 <TabsTrigger value="others" className="flex items-center gap-2">
                   <Settings className="size-4" />
-                  Outros
+                  <p>Outros</p>
                 </TabsTrigger>
               </TabsList>
 
@@ -250,7 +250,7 @@ export function VideoDownloadSettings() {
                       <div>
                         <FormLabel className="flex items-center gap-2">
                           <Music className="size-4" />
-                          Apenas Áudio
+                          <p>Apenas Áudio</p>
                         </FormLabel>
                         <FormDescription>
                           Baixar somente o áudio do vídeo
@@ -274,7 +274,7 @@ export function VideoDownloadSettings() {
                       <div>
                         <FormLabel className="flex items-center gap-2">
                           <BookOpenText className="size-4" />
-                          Legendas
+                          <p>Legendas</p>
                         </FormLabel>
                         <FormDescription>
                           Baixar legendas disponíveis

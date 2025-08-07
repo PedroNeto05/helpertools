@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { InputUrl } from '@/routes/videos/download/-components/input-url.tsx';
-import { VideoDownloadSettings } from '@/routes/videos/download/-components/video-download-settings.tsx';
+import { VideoDownloadQueue } from './-components/video-download-queue';
+import { VideoDownloadSettings } from './-components/video-download-settings';
+import { InputUrl } from './-components/input-url';
 
 export const Route = createFileRoute('/videos/download/')({
   component: Download,
@@ -8,10 +9,13 @@ export const Route = createFileRoute('/videos/download/')({
 
 function Download() {
   return (
-    <div>
-      <div className="flex flex-col space-y-4">
+    <div className="flex h-full space-x-4">
+      <div className="flex flex-1 flex-col space-y-4">
         <InputUrl />
         <VideoDownloadSettings />
+      </div>
+      <div className="h-full flex-1">
+        <VideoDownloadQueue />
       </div>
     </div>
   );
