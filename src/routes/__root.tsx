@@ -4,7 +4,7 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 export const Route = createRootRoute({
   component: () => (
     <>
-      <div className="p-12 h-full flex flex-col">
+      <div className="flex h-full flex-col p-12">
         <Outlet />
       </div>
       <TanStackRouterDevtools />
