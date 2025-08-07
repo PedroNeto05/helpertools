@@ -14,7 +14,7 @@ function Download() {
         <InputUrl />
         <VideoDownloadSettings />
       </div>
-      <div className="min-h-0 flex-1">
+      <div className="h-full flex-1">
         <VideoDownloadQueue />
       </div>
     </div>
