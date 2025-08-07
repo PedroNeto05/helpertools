@@ -18,7 +18,7 @@ export function VideoDownloadQueue() {
           <p>Fila de Download</p>
         </CardTitle>
       </CardHeader>
-      <CardContent className="h-full flex-1 space-y-4 overflow-y-auto">
+      <CardContent className="h-full flex-1 space-y-4 overflow-y-auto p-4">
         <VideoCard />
         <VideoCard />
         <VideoCard />
