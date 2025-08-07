@@ -36,8 +36,8 @@ export function VideoDownloadQueue() {
         <VideoCard />
       </CardContent>
       <CardFooter className="border-border flex-shrink-0 border-t p-4">
-        <Button className="flex w-full items-center">
-          <Download />
+        <Button className="flex w-full items-center text-lg">
+          <Download className="size-6" />
           <p>Baixar Fila</p>
         </Button>
       </CardFooter>
