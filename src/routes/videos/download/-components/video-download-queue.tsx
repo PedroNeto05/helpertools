@@ -33,9 +33,6 @@ export function VideoDownloadQueue() {
         <VideoCard />
         <VideoCard />
         <VideoCard />
-        {videoQueue.map((_, idx) => (
-          <VideoCard key={idx} />
-        ))}
       </CardContent>
       <CardFooter className="border-border border-t p-4">
         <Button className="flex w-full items-center text-lg">
