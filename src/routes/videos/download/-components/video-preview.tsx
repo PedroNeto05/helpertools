@@ -7,7 +7,7 @@ export const VideoPreview = () => {
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <Play className="size-5" />
-          <p>Video Preview</p>
+          <p>Preview do Vídeo</p>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex space-x-4">
