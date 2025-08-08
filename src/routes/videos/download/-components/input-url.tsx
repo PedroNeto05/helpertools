@@ -15,24 +15,15 @@ import { Search, Link } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input';
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
+import { InputUrlformSchema } from '../index.tsx';
 
-export function InputUrl() {
-  const formSchema = z.object({
-    videoUrl: z.url(),
-  });
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      videoUrl: '',
-    },
-  });
+interface InputUrlProps {
+  form: UseFormReturn<z.infer<typeof InputUrlformSchema>>;
+  onSubmit: (values: z.infer<typeof InputUrlformSchema>) => void;
+}
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
-
+export function InputUrl({ form, onSubmit }: InputUrlProps) {
   return (
     <Card>
       <CardHeader>
