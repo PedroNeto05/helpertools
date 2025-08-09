@@ -35,7 +35,6 @@ if __name__ == "__main__":
                 "title": info.get("title"),
                 "description": info.get("description"),
                 "uploader": info.get("uploader"),
-                "uploader_id": info.get("uploader_id"),
                 "duration": duration ,
                 "thumbnail": info.get("thumbnail"),
                 "formats": []
