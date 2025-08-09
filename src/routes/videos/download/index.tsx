@@ -35,7 +35,6 @@ function Download() {
         });
         return;
       }
-      console.log('URL válida:', values.videoUrl);
     },
     onError: async () => {
       await openDialog({

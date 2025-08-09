@@ -4,7 +4,7 @@ use tauri_plugin_shell::ShellExt;
 pub async fn validate_video_url(app: tauri::AppHandle, url: String) -> Result<bool, String> {
     let validate_bin = app.shell().sidecar("validate_url").unwrap().arg(url);
     let output = validate_bin.output().await.map_err(|e| e.to_string())?;
-    if output.status.success(){
+    if output.status.success() {
         return Ok(true);
     }
     Ok(false)
