@@ -9,6 +9,25 @@ import { useForm } from 'react-hook-form';
 import { invoke } from '@tauri-apps/api/core';
 import { useGlobalDialogStore } from '@/stores/global-dialog-store';
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+
+export interface VideoMetadata {
+  title?: string;
+  description?: string;
+  uploader?: string;
+  duration?: number;
+  thumbnail?: string;
+  formats: VideoFormat[];
+}
+
+export interface VideoFormat {
+  format_id?: string;
+  ext?: string;
+  tbr?: string;
+  height?: string;
+  fps?: string;
+  file_size?: number;
+}
 
 export const Route = createFileRoute('/videos/download/')({
   component: Download,
@@ -18,8 +37,10 @@ export const InputUrlformSchema = z.object({
   videoUrl: z.url(),
 });
 
+
 function Download() {
   const openDialog = useGlobalDialogStore((s) => s.open);
+  const [videoMetadata, setVideoMetadata] = useState<VideoMetadata>();
 
   const mutation = useMutation({
     mutationFn: async (values: z.infer<typeof InputUrlformSchema>) => {
@@ -35,8 +56,15 @@ function Download() {
         });
         return;
       }
+
+      const videoMetadata = await invoke<VideoMetadata>("get_video_metadata", {
+        url: values.videoUrl,
+      });
+
+      setVideoMetadata(videoMetadata);
     },
-    onError: async () => {
+    onError: async (erro) => {
+      console.log(erro);
       await openDialog({
         title: 'Erro',
         description:
@@ -61,7 +89,7 @@ function Download() {
           onSubmit={mutation.mutate}
           isLoading={mutation.isPending}
         />
-        <VideoPreview />
+        <VideoPreview title={videoMetadata?.title} description={videoMetadata?.description} thumbnailUrl={videoMetadata?.thumbnail} />
         <VideoDownloadSettings />
       </div>
       <div className="h-full flex-1">
