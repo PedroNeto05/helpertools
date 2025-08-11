@@ -35,7 +35,8 @@
       "icons/icon.ico"
     ],
     "externalBin": [
-      "../bin/video_tools/download_tool/validate_url"
+      "../bin/video_tools/download_tool/validate_url",
+      "../bin/video_tools/download_tool/get_video_metadata"
     ]
   }
 }
