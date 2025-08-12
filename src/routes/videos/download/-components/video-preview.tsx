@@ -17,13 +17,15 @@ export const VideoPreview = ({ title, description, thumbnailUrl }: VideoPreviewP
         </CardTitle>
       </CardHeader>
       <CardContent className="flex space-x-4">
-        <img
-          src={thumbnailUrl}
-          alt="Video Preview"
-          className="h-52 w-96 rounded-md"
-          height={192}
-          width={320}
-        />
+        {thumbnailUrl && (
+          <img
+            src={thumbnailUrl}
+            alt="Video Preview"
+            className="max-h-32 w-64 rounded-md"
+            height={192}
+            width={320}
+          />
+        )}
         <div className="h-full flex-1 flex-col space-y-2">
           <h3 className="text-foreground line-clamp-2 text-lg font-semibold">
             {title}
