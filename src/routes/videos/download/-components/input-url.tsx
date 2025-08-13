@@ -16,11 +16,11 @@ import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input';
 import { z } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
-import { InputUrlformSchema } from '../index.tsx';
+import { inputUrlFormSchema } from '../index.tsx';
 
 interface InputUrlProps {
-  form: UseFormReturn<z.infer<typeof InputUrlformSchema>>;
-  onSubmit: (values: z.infer<typeof InputUrlformSchema>) => void;
+  form: UseFormReturn<z.infer<typeof inputUrlFormSchema>>;
+  onSubmit: (values: z.infer<typeof inputUrlFormSchema>) => void;
   isLoading?: boolean;
 }
 
