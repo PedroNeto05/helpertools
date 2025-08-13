@@ -7,8 +7,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BookOpenText, Music, Plus, Settings, Video } from 'lucide-react';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { UseFormReturn } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -27,38 +26,61 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { VideoFormat, videoSettingsFormSchema } from '..';
 
-const formSchema = z.object({
-  quality: z.string(),
-  fps: z.string(),
-  audioQuality: z.string(),
-  bitrate: z.string(),
-  format: z.string(),
-  audioFormat: z.string(),
-  audioOnly: z.boolean(),
-  subtitles: z.boolean(),
-  subtitlesLanguage: z.string(),
-});
+interface VideoDownloadSettingsProps {
+  form: UseFormReturn<z.infer<typeof videoSettingsFormSchema>>;
+  onSubmit: (values: z.infer<typeof videoSettingsFormSchema>) => void;
+  formats: VideoFormat[] | undefined;
+}
 
-export function VideoDownloadSettings() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      quality: '',
-      fps: '',
-      format: '',
-      bitrate: '',
-      audioQuality: '',
-      audioFormat: '',
-      audioOnly: false,
-      subtitles: false,
-      subtitlesLanguage: '',
-    },
-  });
+export function VideoDownloadSettings({ formats, form, onSubmit }: VideoDownloadSettingsProps) {
+  const watchQuality = form.watch("quality");
+  const watchFormat = form.watch("format");
+  const watchFps = form.watch("fps");
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const qualities = [...new Set(
+    formats
+      ?.map(f => f.height || "") // garante string
+      .filter(h => h !== "")     // remove vazio
+  )];
+
+  const formatsFiltered = watchQuality
+    ? [...new Set(
+      formats
+        ?.filter(f => (f.height || "") === watchQuality)
+        .map(f => f.ext || "")
+        .filter(ext => ext !== "")
+    )]
+    : [];
+
+  const fpsFiltered = watchFormat
+    ? [...new Set(
+      formats
+        ?.filter(
+          f =>
+            (f.height || "") === watchQuality &&
+            (f.ext || "") === watchFormat
+        )
+        .map(f => f.fps || "")
+        .filter(fps => fps !== "")
+    )]
+    : [];
+
+  const bitrateFiltered = watchFps
+    ? [...new Set(
+      formats
+        ?.filter(
+          f =>
+            (f.height || "") === watchQuality &&
+            (f.ext || "") === watchFormat &&
+            (f.fps || "") === watchFps
+        )
+        .map(f => f.tbr || "")
+        .filter(tbr => tbr !== "")
+    )]
+    : [];
+
 
   return (
     <Card>
@@ -91,30 +113,74 @@ export function VideoDownloadSettings() {
                 </TabsTrigger>
               </TabsList>
 
+
               <TabsContent value="video" className="space-y-4">
                 <FormField
                   control={form.control}
                   name="quality"
+                  disabled={!formats || formats.length === 0}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Qualidade do vídeo</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        disabled={field.disabled}
+                        onValueChange={val => {
+                          field.onChange(val);
+                          form.setValue("format", "");
+                          form.setValue("fps", "");
+                        }}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Selecione a qualidade" />
                           </SelectTrigger>
                         </FormControl>
-
                         <SelectContent>
-                          <SelectItem value="1080p">1080p</SelectItem>
+                          {qualities.map(q => (
+                            <SelectItem key={q} value={q}>
+                              {q}p
+                            </SelectItem>
+                          )).reverse()}
                         </SelectContent>
                       </Select>
                     </FormItem>
                   )}
                 />
+
+                {/* Formato */}
+                <FormField
+                  control={form.control}
+                  name="format"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Formato do vídeo</FormLabel>
+                      <Select
+                        onValueChange={val => {
+                          field.onChange(val);
+                          form.setValue("fps", "");
+                        }}
+                        value={field.value}
+                        disabled={!watchQuality}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Selecione o formato" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {formatsFiltered.map(ext => (
+                            <SelectItem key={ext} value={ext}>
+                              {ext.toUpperCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+
+                {/* FPS */}
                 <FormField
                   control={form.control}
                   name="fps"
@@ -123,7 +189,8 @@ export function VideoDownloadSettings() {
                       <FormLabel>FPS do vídeo</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
+                        disabled={!watchFormat}
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
@@ -131,46 +198,27 @@ export function VideoDownloadSettings() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="30">30 FPS</SelectItem>
-                          <SelectItem value="60">60 FPS</SelectItem>
+                          {fpsFiltered.map(fps => (
+                            <SelectItem key={fps} value={fps}>
+                              {fps} FPS
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="format"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Formato do vídeo</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Selecione o formato" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="mp4">MP4</SelectItem>
-                          <SelectItem value="mkv">MKV</SelectItem>
-                          <SelectItem value="webm">WebM</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
+
                 <FormField
                   control={form.control}
                   name="bitrate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Bitrate do vídeo (opcional)</FormLabel>
+                      <FormLabel>Bitrate do vídeo</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
+                        disabled={!watchFps} // só habilita depois de escolher FPS
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
@@ -178,17 +226,17 @@ export function VideoDownloadSettings() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="1000">1000 kbps</SelectItem>
-                          <SelectItem value="2000">2000 kbps</SelectItem>
-                          <SelectItem value="4000">4000 kbps</SelectItem>
-                          <SelectItem value="8000">8000 kbps</SelectItem>
+                          {bitrateFiltered.map(bitrate => (
+                            <SelectItem key={bitrate} value={bitrate}>
+                              {bitrate} kbps
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </FormItem>
                   )}
                 />
               </TabsContent>
-
               <TabsContent value="audio" className="space-y-4">
                 <FormField
                   control={form.control}

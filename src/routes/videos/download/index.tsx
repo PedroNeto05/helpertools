@@ -33,8 +33,20 @@ export const Route = createFileRoute('/videos/download/')({
   component: Download,
 });
 
-export const InputUrlformSchema = z.object({
+export const inputUrlFormSchema = z.object({
   videoUrl: z.url(),
+});
+
+export const videoSettingsFormSchema = z.object({
+  quality: z.string(),
+  fps: z.string(),
+  audioQuality: z.string(),
+  bitrate: z.string(),
+  format: z.string(),
+  audioFormat: z.string(),
+  audioOnly: z.boolean(),
+  subtitles: z.boolean(),
+  subtitlesLanguage: z.string(),
 });
 
 
@@ -42,8 +54,33 @@ function Download() {
   const openDialog = useGlobalDialogStore((s) => s.open);
   const [videoMetadata, setVideoMetadata] = useState<VideoMetadata>();
 
+  const inputUrlForm = useForm<z.infer<typeof inputUrlFormSchema>>({
+    resolver: zodResolver(inputUrlFormSchema),
+    defaultValues: {
+      videoUrl: '',
+    },
+  });
+
+  const videoSettingsForm = useForm<z.infer<typeof videoSettingsFormSchema>>({
+    resolver: zodResolver(videoSettingsFormSchema),
+    defaultValues: {
+      quality: '',
+      fps: '',
+      format: '',
+      bitrate: '',
+      audioQuality: '',
+      audioFormat: '',
+      audioOnly: false,
+      subtitles: false,
+      subtitlesLanguage: '',
+    },
+  });
+
   const mutation = useMutation({
-    mutationFn: async (values: z.infer<typeof InputUrlformSchema>) => {
+    mutationFn: async (values: z.infer<typeof inputUrlFormSchema>) => {
+      setVideoMetadata(undefined);
+      videoSettingsForm.reset();
+
       const isValidUrl = await invoke<boolean>('validate_video_url', {
         url: values.videoUrl,
       });
@@ -74,23 +111,20 @@ function Download() {
     },
   });
 
-  const InputUrlForm = useForm<z.infer<typeof InputUrlformSchema>>({
-    resolver: zodResolver(InputUrlformSchema),
-    defaultValues: {
-      videoUrl: '',
-    },
-  });
+  function onSubmitVideoSettings(values: z.infer<typeof videoSettingsFormSchema>) {
+    console.log(values);
+  }
 
   return (
     <div className="flex h-full space-x-4">
       <div className="flex flex-1 flex-col space-y-4">
         <InputUrl
-          form={InputUrlForm}
+          form={inputUrlForm}
           onSubmit={mutation.mutate}
           isLoading={mutation.isPending}
         />
         <VideoPreview title={videoMetadata?.title} description={videoMetadata?.description} thumbnailUrl={videoMetadata?.thumbnail} />
-        <VideoDownloadSettings />
+        <VideoDownloadSettings formats={videoMetadata?.formats} form={videoSettingsForm} onSubmit={onSubmitVideoSettings} />
       </div>
       <div className="h-full flex-1">
         <VideoDownloadQueue />
