@@ -36,7 +36,6 @@ pub async fn get_video_metadata(
     app: tauri::AppHandle,
     url: String,
 ) -> Result<VideoMetadata, String> {
-    println!("{}", url);
     let metadata_bin = app.shell().sidecar("get_video_metadata").unwrap().arg(url);
     let output = metadata_bin.output().await.map_err(|e| e.to_string())?;
 
