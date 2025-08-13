@@ -51,7 +51,7 @@ if __name__ == "__main__":
                 "ext": f.get("ext"),
                 "tbr": str(f.get("tbr", "")),
                 "height": str(f.get("height", "")),
-                "fps": str(f.get("fps", "")),
+                "fps": str(int(f.get("fps", ""))),
                 "file_size": int(tbr * 1000 / 8 * duration)
                 })
 
