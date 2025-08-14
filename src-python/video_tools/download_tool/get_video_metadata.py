@@ -45,11 +45,15 @@ if __name__ == "__main__":
         for f in info.get("formats", []):
             if f.get("height") not in allowed_qualities:
                 continue
-            tbr = f.get("tbr")
+            tbr = f.get("tbr", "")
+            if tbr and duration:
+                filesize = int(tbr * 1000 / 8 * duration)
+            else:
+                filesize = None
             result["formats"].append({
                 "format_id": f.get("format_id"),
                 "ext": f.get("ext"),
-                "tbr": str(f.get("tbr", "")),
+                "tbr": str(tbr),
                 "height": str(f.get("height", "")),
                 "fps": str(int(f.get("fps", ""))),
                 "file_size": int(tbr * 1000 / 8 * duration)

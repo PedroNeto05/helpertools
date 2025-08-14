@@ -41,8 +41,8 @@ export function VideoDownloadSettings({ formats, form, onSubmit }: VideoDownload
 
   const qualities = [...new Set(
     formats
-      ?.map(f => f.height || "") // garante string
-      .filter(h => h !== "")     // remove vazio
+      ?.map(f => f.height || "")
+      .filter(h => h !== "")
   )];
 
   const formatsFiltered = watchQuality
@@ -214,11 +214,11 @@ export function VideoDownloadSettings({ formats, form, onSubmit }: VideoDownload
                   name="bitrate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Bitrate do vídeo</FormLabel>
+                      <FormLabel>Bitrate do vídeo (opcional)</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
-                        disabled={!watchFps} // só habilita depois de escolher FPS
+                        disabled={!watchFps}
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
